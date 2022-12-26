@@ -17,7 +17,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Install Dependencies
-        run: go mod download
+        run: make tools
       - name: Run Tests
         run: |
           cd api
