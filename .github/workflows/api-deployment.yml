@@ -1,0 +1,29 @@
+name: Server CI and Deployment
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        go-version: [1.19.x]
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ matrix.go-version }}
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: |
+          cd api
+          go mod download
+      - name: Run Tests
+        run: |
+          cd api
+          go test ./...
+        env:
+          CI: true
+          CONFIG: ${{ secrets.CONFIG }}
