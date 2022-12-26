@@ -1,9 +1,77 @@
-# Go Template
-Go-chi, UpperDB Rest Api Template
-
 ## Pre Requisites
 
 Make sure you have golang installed on your system. [Golang Instalation instruction](https://golang.org/doc/install)
+
+## File Structure
+```
+.
+├── .air.conf
+├── .env.example
+├── .gitignore
+├── Dockerfile
+├── LICENSE
+├── Makefile
+├── README.md
+├── cmd
+│   ├── api
+│   │   ├── main.go
+│   │   └── main_test.go
+│   └── migrate
+│       └── main.go
+├── config
+│   ├── api.develop.conf
+│   ├── api.production.conf
+│   ├── api.staging.conf
+│   └── config.go
+├── cronjob
+│   └── cron.go
+├── data
+│   ├── db.go
+│   ├── oauth_clients.go
+│   ├── oauth_tokens.go
+│   ├── presenter
+│   │   └── users.go
+│   ├── users.go
+│   └── utils.go
+├── db
+│   ├── db.sh
+│   ├── dbconf.go
+│   ├── dbconf.yml
+│   └── migrations
+│       ├── 00001_create_users_table.sql
+│       ├── 00002_create_table_oauth_clients.sql
+│       └── 00003_create_table_oauth_tokens.sql
+├── docker-compose.yml
+├── go.mod
+├── go.sum
+├── lib
+│   ├── connect
+│   │   └── config.go
+│   └── session
+│       └── auth.go
+└── server
+    ├── api
+    │   ├── context.go
+    │   ├── cors.go
+    │   ├── errors.go
+    │   ├── logger.go
+    │   └── renderer.go
+    ├── auth
+    │   ├── password.go
+    │   ├── session.go
+    │   └── signup.go
+    ├── oauth
+    │   ├── oauth.go
+    │   ├── routes.go
+    │   └── signin.go
+    ├── server.go
+    └── user
+        ├── routes.go
+        ├── session_user.go
+        └── users.go
+
+17 directories, 47 files
+```
 
 ## Installing Dependencies
 
