@@ -20,3 +20,8 @@ jobs:
           cd client
           npm ci 
           npm run build --if-present
+  build-push-gcr:
+    uses: jesseokeya/workflows/.github/workflows/gcp-push-artifact-registry.yml@main
+    with:
+      working-directory: ./client
+    secrets: inherit
