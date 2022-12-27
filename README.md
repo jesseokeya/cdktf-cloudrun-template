@@ -52,6 +52,9 @@ Cloud Development Kit for Terraform (CDKTF) services template deployed on google
 | GOOGLE_CREDENTIALS   | JSON string of your google cloud service account key file content               |
 |                      |                 |
 
+### Registering services with cloud run
+
+
 ## Docs
 - [Api Docs](./api/README.md)
 - [Client Docs](./client/README.md)

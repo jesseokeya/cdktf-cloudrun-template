@@ -27,8 +27,8 @@ jobs:
         env:
           CI: true
           CONFIG: ${{ secrets.CONFIG }}
-  gcp-container-deploy:
+  build-push-gcr:
     uses: jesseokeya/workflows/.github/workflows/gcp-push-artifact-registry.yml@main
     with:
-      default_branch: master
+      default_branch: main
     secrets: inherit
