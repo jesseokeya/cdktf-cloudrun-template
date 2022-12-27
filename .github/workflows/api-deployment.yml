@@ -31,5 +31,5 @@ jobs:
   build-push-gcr:
     uses: jesseokeya/workflows/.github/workflows/gcp-push-artifact-registry.yml@main
     with:
-      working-directory: api
+      working_directory: ./api
     secrets: inherit
