@@ -36,9 +36,11 @@ Cloud Development Kit for Terraform (CDKTF) services template deployed on google
 
 ## Setting up deplouyment to gcp artifact registry
 * Create a service account key file on gcp
-  ![infra diagram](./images/service-account.png)
+  ![service account](./images/service-account.png)
 * Create a json key file on gcp
-  ![infra diagram](./images/key-file.png)
+  ![keyfile](./images/key-file.png)
+* Create an `images` folder on gcp `artifact registry` to hold your container services
+  ![artifact registry](./images/artifact.png)
 * Use the keyfile contents to set the following github action secrests. To learn how to set gihub action secrets visit https://docs.github.com/en/actions/security-guides/encrypted-secrets
 
 
