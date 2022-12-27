@@ -10,6 +10,10 @@ jobs:
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
 
+    defaults:
+      run:
+        working-directory: ./api
+
     steps:
       - name: Install Go
         uses: actions/setup-go@v2
@@ -31,5 +35,5 @@ jobs:
   build-push-gcr:
     uses: jesseokeya/workflows/.github/workflows/gcp-push-artifact-registry.yml@main
     with:
-      working_directory: ./api
+      working-directory: ${{ defaults.working-directory }}
     secrets: inherit
