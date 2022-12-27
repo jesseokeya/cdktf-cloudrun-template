@@ -29,4 +29,6 @@ jobs:
           CONFIG: ${{ secrets.CONFIG }}
   build-push-gcr:
     uses: jesseokeya/workflows/.github/workflows/gcp-push-artifact-registry.yml@main
+    with:
+      path: ./api
     secrets: inherit
