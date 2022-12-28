@@ -127,6 +127,9 @@ jobs:
       - name: Deploy Artifacts To Cloud Run
         env:
           GOOGLE_CREDENTIALS: "${{ secrets.GOOGLE_CREDENTIALS }}"
+          API_ARTIFACT_REGISTRY_CONTAINER: "${{ secrets.API_ARTIFACT_REGISTRY_CONTAINER }}"
+          CLIENT_ARTIFACT_REGISTRY_CONTAINER: "${{ secrets.CLIENT_ARTIFACT_REGISTRY_CONTAINER }}"
+
         run: |
           make cdktf-cli-install
           make cdktf-deploy
