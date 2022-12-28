@@ -18,26 +18,42 @@ export class CloudRunStack extends TerraformStack {
     const server = services.server;
     const client = services.client;
 
-    new GoogleProvider(this, "GoogleAuth", {
+    new GoogleProvider(this, "google-auth", {
       zone,
       credentials,
       region: local,
       project: projectId,
     });
 
-    const containers = [{ image: server }, { image: client }];
-
-    const cloudrunsvcapp = new CloudRunService(this, "GcpCDKCloudrunsvc", {
-      location: local,
-      name: "gcpcdktfcloudrunsvc2020",
-      template: {
-        spec: {
-          containers,
+    const cloud_run_svc_app_server = new CloudRunService(
+      this,
+      "gcp-cdk-cloudrun-svc-server",
+      {
+        location: local,
+        name: "gcp-cdktf-cloudrun-svc-server",
+        template: {
+          spec: {
+            containers: [{ image: server }],
+          },
         },
-      },
-    });
+      }
+    );
 
-    const policy_data = new DataGoogleIamPolicy(this, "datanoauth", {
+    const cloud_run_svc_app_client = new CloudRunService(
+      this,
+      "gcp-cdk-cloudrun-svc-client",
+      {
+        location: local,
+        name: "gcp-cdktf-cloudrun-svc-client",
+        template: {
+          spec: {
+            containers: [{ image: client }],
+          },
+        },
+      }
+    );
+
+    const policy_data = new DataGoogleIamPolicy(this, "data-no-auth", {
       binding: [
         {
           role: "roles/run.invoker",
@@ -46,19 +62,26 @@ export class CloudRunStack extends TerraformStack {
       ],
     });
 
-    new CloudRunServiceIamPolicy(this, "runsvciampolicy", {
+    new CloudRunServiceIamPolicy(this, "runs-vc-iam-policy-server", {
       location: local,
-      project: cloudrunsvcapp.project,
-      service: cloudrunsvcapp.name,
+      project: cloud_run_svc_app_server.project,
+      service: cloud_run_svc_app_server.name,
       policyData: policy_data.policyData,
     });
 
-    new TerraformOutput(this, "cdktfcloudrunUrl", {
-      value: "${" + cloudrunsvcapp.fqn + ".status[0].url}",
+    new CloudRunServiceIamPolicy(this, "runs-vc-iam-policy-client", {
+      location: local,
+      project: cloud_run_svc_app_server.project,
+      service: cloud_run_svc_app_server.name,
+      policyData: policy_data.policyData,
     });
 
-    new TerraformOutput(this, "cdktfcloudrunUrlN", {
-      value: cloudrunsvcapp.status.get(0).url,
+    new TerraformOutput(this, "cdktf-cloudrun-server-url", {
+      value: cloud_run_svc_app_server.status.get(0).url,
+    });
+
+    new TerraformOutput(this, "cdktf-cloudrun-client-url", {
+      value: cloud_run_svc_app_client.status.get(0).url,
     });
   }
 }
