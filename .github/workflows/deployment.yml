@@ -1,0 +1,124 @@
+name: Server CI and Deployment
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        go-version: [1.19.x]
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Install Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ matrix.go-version }}
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install Dependencies
+        run: |
+          cd api
+          go mod download
+      - name: Run Tests
+        run: |
+          cd api
+          go test ./...
+        env:
+          CI: true
+          CONFIG: ${{ secrets.CONFIG }}
+
+  build-push-gcr-api:
+    name: Build and Push to GCP
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: ${{ secrets.IMAGE_NAME_API }}
+      PROJECT_ID: ${{ secrets.PROJECT_ID }}
+      GCP_REGION: ${{ secrets.GCP_REGION }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Authenticate to gcloud
+        uses: "google-github-actions/auth@v1"
+        with:
+          credentials_json: "${{ secrets.GOOGLE_CREDENTIALS }}"
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+
+      - name: "Show information about gcloud CLI"
+        run: |
+          gcloud info
+      # Build the Docker image using the IMAGE_NAME environment variable
+      - name: Build Docker image
+        run: |
+          cd api
+          echo "Image name: ${{ env.IMAGE_NAME }}"
+          docker build -t ${{ env.IMAGE_NAME }} .
+      - name: Automatic Tagging of Releases
+        id: increment-git-tag
+        run: |
+          bash ./scripts/git_update.sh -v major
+      - name: Configure Docker Client
+        run: |-
+          gcloud auth configure-docker --quiet
+          gcloud auth configure-docker $GCP_REGION-docker.pkg.dev --quiet
+      - name: Push Docker Image to Artifact Registry
+        env:
+          GIT_TAG: ${{ steps.increment-git-tag.outputs.git-tag }}
+        run: |-
+          docker tag $IMAGE_NAME:latest $GCP_REGION-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:latest
+          docker tag $IMAGE_NAME:latest $GCP_REGION-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:$GIT_TAG
+          docker push $GCP_REGION-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:latest
+          docker push $GCP_REGION-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:$GIT_TAG
+
+  build-push-gcr-client:
+    name: Build and Push to GCP
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: ${{ secrets.IMAGE_NAME_CLIENT }}
+      PROJECT_ID: ${{ secrets.PROJECT_ID }}
+      GCP_REGION: ${{ secrets.GCP_REGION }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+
+      - name: Authenticate to gcloud
+        uses: "google-github-actions/auth@v1"
+        with:
+          credentials_json: "${{ secrets.GOOGLE_CREDENTIALS }}"
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+
+      - name: "Show information about gcloud CLI"
+        run: |
+          gcloud info
+      # Build the Docker image using the IMAGE_NAME environment variable
+      - name: Build Docker image
+        run: |
+          cd client
+          echo "Image name: ${{ env.IMAGE_NAME }}"
+          docker build -t ${{ env.IMAGE_NAME }} .
+      - name: Automatic Tagging of Releases
+        id: increment-git-tag
+        run: |
+          bash ./scripts/git_update.sh -v major
+      - name: Configure Docker Client
+        run: |-
+          gcloud auth configure-docker --quiet
+          gcloud auth configure-docker $GCP_REGION-docker.pkg.dev --quiet
+      - name: Push Docker Image to Artifact Registry
+        env:
+          GIT_TAG: ${{ steps.increment-git-tag.outputs.git-tag }}
+        run: |-
+          docker tag $IMAGE_NAME:latest $GCP_REGION-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:latest
+          docker tag $IMAGE_NAME:latest $GCP_REGION-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:$GIT_TAG
+          docker push $GCP_REGION-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:latest
+          docker push $GCP_REGION-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:$GIT_TAG
