@@ -67,9 +67,14 @@ make tools
 # Enter the cdktf folder
 cd cdktf
 
-# 
+# List resources to be created via cdktf
 cdktf list 
 
+# Deploy resources to gcp
+cdktf deploy --all
+
+# Destroy resources to gcp
+cdktf destroy --all 
 ```
 
 ### Registering services with cloud run
