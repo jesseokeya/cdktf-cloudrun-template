@@ -22,8 +22,8 @@ const services: Services = {
 
 // Read config from environment variables
 export const config: Config = {
-  region: process.env.REGION || "asia-east1",
-  zone: process.env.ZONE || "asia-east1-c",
+  region: process.env.GCP_REGION || "asia-east1",
+  zone: process.env.GCP_ZONE || "asia-east1-c",
   projectId: process.env.PROJECT_ID || "gcp-cdk-tf",
   credentials: process.env.GOOGLE_CREDENTIALS || "{}",
   services,
