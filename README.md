@@ -5,8 +5,7 @@ Cloud Development Kit for Terraform (CDKTF) services template deployed on google
 ```
 ├── .github
 │   └── workflows
-│       ├── api-deployment.yml
-│       ├── client-deployment.yml
+│       ├── deployment.yml
 │       └── codeql.yml
 ├── .gitignore
 ├── LICENSE
