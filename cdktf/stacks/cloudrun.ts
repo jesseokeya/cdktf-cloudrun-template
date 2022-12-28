@@ -12,8 +12,10 @@ export class CloudRunStack extends TerraformStack {
     super(scope, name);
 
     // Dockerized services deployed to google artifact registry
-    const server = "gcr.io/cloudrun/hello";
-    const client = "gcr.io/cloudrun/hello";
+    const server =
+      "us-central1-docker.pkg.dev/sunlit-liberty-369403/images/api";
+    const client =
+      "us-central1-docker.pkg.dev/sunlit-liberty-369403/images/client";
 
     const { credentials, region: local, zone, projectId } = config;
 
