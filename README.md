@@ -55,7 +55,7 @@ Cloud Development Kit for Terraform (CDKTF) services template deployed on google
 In file [cloudrun.ts](https://github.com/jesseokeya/cdktf-cloudrun-template/blob/2d3721643d1bf7358a6ac81ea61b71c044037638/cdktf/stacks/cloudrun.ts#L13-L17)
 
 Update add artifact registry image services for cloudrun to deploy via `cdktf`
-![services](./images/services.png)
+![services](./images/containers.png)
 
 
 

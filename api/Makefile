@@ -34,7 +34,7 @@ print-%: ; @echo $*=$($*)
 ##
 tools:
 	@mkdir -p ./bin
-	@go get -u github.com/cosmtrek/air
+	@go get -d github.com/cosmtrek/air
 	@go build -tags='no_mysql no_sqlite3' -o bin/migrate ./cmd/migrate
 	@go mod tidy
 
