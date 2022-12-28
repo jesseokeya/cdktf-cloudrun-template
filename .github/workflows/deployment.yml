@@ -35,7 +35,7 @@ jobs:
     name: Build and Push to GCP
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
+      IMAGE_NAME: ${{ secrets.IMAGE_NAME_API }}
       PROJECT_ID: ${{ secrets.PROJECT_ID }}
       GCP_REGION: ${{ secrets.GCP_REGION }}
 
@@ -81,7 +81,7 @@ jobs:
     name: Build and Push to GCP
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
+      IMAGE_NAME: ${{ secrets.IMAGE_NAME_CLIENT }}
       PROJECT_ID: ${{ secrets.PROJECT_ID }}
       GCP_REGION: ${{ secrets.GCP_REGION }}
 
