@@ -32,13 +32,32 @@ Cloud Development Kit for Terraform (CDKTF) services template deployed on google
 ```
 
 ## Infrastructure Diagram
-![alt text](./images/infra.png)
+![infra diagram](./images/infra.png)
 
-## Api Docs
-[Api Docs](./api/README.md)
+## Setting up deplouyment to gcp artifact registry
+* Create a service account key file on gcp
+  ![service account](./images/service-account.png)
+* Create a json key file on gcp
+  ![keyfile](./images/key-file.png)
+* Create an `images` folder on gcp `artifact registry` to hold your container services
+  ![artifact registry](./images/artifact.png)
+* Use the keyfile contents to set the following github action secrests. To learn how to set gihub action secrets visit https://docs.github.com/en/actions/security-guides/encrypted-secrets
 
-## Client Docs
-[Api Docs](./client/README.md)
+
+| Environment Variable  | Description     |
+| :------------------  | :------------- |
+| IMAGE_NAME           | Contianer service image name e.g users-service   |
+| PROJECT_ID           | Google cloud project id  |
+| GCP_REGION           | Region to deploy your container service e.g us-central-1    |
+| GOOGLE_CREDENTIALS   | JSON string of your google cloud service account key file content               |
+|                      |                 |
+
+### Registering services with cloud run
+
+
+## Docs
+- [Api Docs](./api/README.md)
+- [Client Docs](./client/README.md)
 
 ## Built With
 * [GCP CDKTF](https://developer.hashicorp.com/terraform/cdktf) - GCP Terraform CDK
