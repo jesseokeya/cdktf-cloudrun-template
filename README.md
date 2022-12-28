@@ -31,7 +31,7 @@ Cloud Development Kit for Terraform (CDKTF) services template deployed on google
 ```
 
 ## Infrastructure Diagram
-![infra diagram](./images/infrastructure-img.png)
+![infra diagram](./images/infra-image.png)
 
 ## Setting up deplouyment to gcp artifact registry
 * Install `CDKTF` cli
