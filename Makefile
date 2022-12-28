@@ -62,7 +62,7 @@ cdktf-install:
 	@cd cdktf && npm install
 
 cdktf-deploy:
-	@cd cdktf && cdktf list && cdktf synth && cdktf deploy --all
+	@cd cdktf && npm i && cdktf list && cdktf synth && cdktf deploy --all
 
 cdktf-destroy:
 	@cd cdktf && cdktf destroy --all
