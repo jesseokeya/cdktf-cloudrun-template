@@ -12,7 +12,6 @@ export class CloudRunStack extends TerraformStack {
     super(scope, name);
 
     // Dockerized services deployed to google artifact registry
-
     const { credentials, region: local, zone, projectId, services } = config;
 
     const server = services.server;
