@@ -12,12 +12,11 @@ export class CloudRunStack extends TerraformStack {
     super(scope, name);
 
     // Dockerized services deployed to google artifact registry
-    const server =
-      "us-central1-docker.pkg.dev/sunlit-liberty-369403/images/api";
-    const client =
-      "us-central1-docker.pkg.dev/sunlit-liberty-369403/images/client";
 
-    const { credentials, region: local, zone, projectId } = config;
+    const { credentials, region: local, zone, projectId, services } = config;
+
+    const server = services.server;
+    const client = services.client;
 
     new GoogleProvider(this, "GoogleAuth", {
       zone,
