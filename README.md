@@ -31,7 +31,7 @@ Cloud Development Kit for Terraform (CDKTF) services template deployed on google
 ```
 
 ## Infrastructure Diagram
-![infra diagram](./images/infrastructure.png)
+![infra diagram](./images/infrastructure-img.png)
 
 ## Setting up deplouyment to gcp artifact registry
 * Install `CDKTF` cli
@@ -53,8 +53,8 @@ Cloud Development Kit for Terraform (CDKTF) services template deployed on google
 | PROJECT_ID                         | Google cloud project id                                              |
 | GCP_REGION                         | Region to deploy your container service e.g us-central-1             |
 | GOOGLE_CREDENTIALS                 | JSON string of your google cloud service account key file content    |
-| API_ARTIFACT_REGISTRY_CONTAINER    | Artifact registry container name for the application api / server         |
-| API_ARTIFACT_REGISTRY_CONTAINER    | Artifact registry container name for the application client               |
+| API_ARTIFACT_REGISTRY_CONTAINER    | Artifact registry container name for the application api / server    |
+| CLIENT_ARTIFACT_REGISTRY_CONTAINER | Artifact registry container name for the application client          |
 |                                    |                                                                      |
 
 ### Deploying locally
