@@ -128,5 +128,4 @@ jobs:
         env:
           GOOGLE_CREDENTIALS: "${{ secrets.GOOGLE_CREDENTIALS }}"
         run: |
-          make tools
           make cdktf-deploy
