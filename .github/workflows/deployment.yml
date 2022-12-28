@@ -100,6 +100,7 @@ jobs:
       - name: "Show information about gcloud CLI"
         run: |
           gcloud info
+
       # Build the Docker image using the IMAGE_NAME environment variable
       - name: Build Docker image
         run: |
@@ -122,3 +123,10 @@ jobs:
           docker tag $IMAGE_NAME:latest $GCP_REGION-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:$GIT_TAG
           docker push $GCP_REGION-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:latest
           docker push $GCP_REGION-docker.pkg.dev/$PROJECT_ID/images/$IMAGE_NAME:$GIT_TAG
+
+      - name: Deploy Artifacts To Cloud Run
+        env:
+          GOOGLE_CREDENTIALS: "${{ secrets.GOOGLE_CREDENTIALS }}"
+        run: |
+          make tools
+          make cdktf-deploy

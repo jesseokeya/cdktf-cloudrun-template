@@ -29,4 +29,7 @@ COPY --from=0 /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=0 ./app/bin/api /bin/api
 COPY --from=0 ./app/bin/migrate /bin/migrate
 
+# Set config environment variable
+ENV CONFIG=config/api.production.conf
+
 CMD ["/bin/api"]

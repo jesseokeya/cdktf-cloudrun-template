@@ -1,5 +1,5 @@
 # cdktf-cloudrun-template
-Cloud Development Kit for Terraform (CDKTF) services template deployed on google cloud platform
+Cloud Development Kit for Terraform (CDKTF) services template deployed on google cloud platform. Read more on cdktf [here](https://developer.hashicorp.com/terraform/tutorials/cdktf/cdktf-install)
 
 ## Project structure
 ```
@@ -34,6 +34,10 @@ Cloud Development Kit for Terraform (CDKTF) services template deployed on google
 ![infra diagram](./images/infrastructure.png)
 
 ## Setting up deplouyment to gcp artifact registry
+* Install `CDKTF` cli
+  ```sh
+    npm install --global cdktf-cli@latest
+  ```
 * Create a service account key file on gcp
   ![service account](./images/service-account.png)
 * Create a json key file on gcp
@@ -43,21 +47,36 @@ Cloud Development Kit for Terraform (CDKTF) services template deployed on google
 * Use the keyfile contents to set the following github action secrests. To learn how to set gihub action secrets visit https://docs.github.com/en/actions/security-guides/encrypted-secrets
 
 
-| Environment Variable  | Description     |
-| :------------------  | :------------- |
-| IMAGE_NAME           | Contianer service image name e.g users-service   |
-| PROJECT_ID           | Google cloud project id  |
-| GCP_REGION           | Region to deploy your container service e.g us-central-1    |
-| GOOGLE_CREDENTIALS   | JSON string of your google cloud service account key file content               |
-|                      |                 |
+| Environment Variable               | Description                                                          |
+| :------------------                | :-------------                                                       |
+| IMAGE_NAME                         | Contianer service image name e.g users-service                       |
+| PROJECT_ID                         | Google cloud project id                                              |
+| GCP_REGION                         | Region to deploy your container service e.g us-central-1             |
+| GOOGLE_CREDENTIALS                 | JSON string of your google cloud service account key file content    |
+| API_ARTIFACT_REGISTRY_CONTAINER    | Artifact registry container name for the application api / server         |
+| API_ARTIFACT_REGISTRY_CONTAINER    | Artifact registry container name for the application client               |
+|                                    |                                                                      |
+
+### Deploying locally
+```sh
+# Install required dependencies for project
+make tools
+```
+
+```sh
+# Enter the cdktf folder
+cd cdktf
+
+# 
+cdktf list 
+
+```
 
 ### Registering services with cloud run
 In file [cloudrun.ts](https://github.com/jesseokeya/cdktf-cloudrun-template/blob/2d3721643d1bf7358a6ac81ea61b71c044037638/cdktf/stacks/cloudrun.ts#L13-L17)
 
 Update add artifact registry image services for cloudrun to deploy via `cdktf`
-![services](./images/containers.png)
-
-
+![services](./images/container-services.png)
 
 
 ## Docs
