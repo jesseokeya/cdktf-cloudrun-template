@@ -70,8 +70,8 @@ export class CloudRunStack extends TerraformStack {
 
     new CloudRunServiceIamPolicy(this, "runs-vc-iam-policy-client", {
       location: local,
-      project: cloud_run_svc_app_server.project,
-      service: cloud_run_svc_app_server.name,
+      project: cloud_run_svc_app_client.project,
+      service: cloud_run_svc_app_client.name,
       policyData: policy_data.policyData,
     });
 
