@@ -83,10 +83,6 @@ In file [cloudrun.ts](https://github.com/jesseokeya/cdktf-cloudrun-template/blob
 Update add artifact registry image services for cloudrun to deploy via `cdktf`
 ![services](./images/container-services.png)
 
-### Update cloudrun iam principal to make domains publicly accessible
-![principals](./images/add-principal.png)
-
-
 ## Docs
 - [Api Docs](./api/README.md)
 - [Client Docs](./client/README.md)
